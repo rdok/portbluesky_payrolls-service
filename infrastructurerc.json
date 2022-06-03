@@ -1,0 +1,9 @@
+{
+  "name": "payrolls-service",
+  "region": "eu-west-1",
+  "org": "portbluesky",
+  "testEnvironment": "test",
+  "productionEnvironment": "prod",
+  "allowedEnvironments": ["prod", "test", "dev"],
+  "baseDomainHostedZoneId": "ZSY7GT2NEDPN0"
+}

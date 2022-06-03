@@ -1,0 +1,58 @@
+{
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rdok/portbluesky_payrolls-service"
+  },
+  "name": "payrolls-service",
+  "version": "1.0.0",
+  "description": " Apollo GraphQL Server template with AWS SAM, TypeScript & Lambda. Boilerplate with GitHub CI/CD actions, best security practises such as least privileges IAM policies, automated dependency updates and much more. ",
+  "scripts": {
+    "prebuild": "rm -rf dist/",
+    "build": "tsc && cp package* dist/",
+    "postbuild": "cp lib/schema.graphql dist/lib",
+    "generate-gql-types": "graphql-codegen --config codegen.yml",
+    "predev": "npm run generate-gql-types",
+    "dev": "nodemon --config dev/nodemon.json dev/server.ts",
+    "lint": "eslint ./ --max-warnings 0",
+    "lint:fix": "eslint ./ --fix",
+    "prettier": "prettier --check .",
+    "prettier:fix": "prettier --write .",
+    "test": "jest --verbose",
+    "test:watch": "jest --watch --verbose"
+  },
+  "author": "Rizart Dokollari",
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "@graphql-codegen/cli": "^2.6.2",
+    "@graphql-codegen/typescript": "^2.4.11",
+    "@graphql-codegen/typescript-resolvers": "^2.6.4",
+    "@types/jest": "^27.5.1",
+    "@types/node": "^17.0.38",
+    "@typescript-eslint/eslint-plugin": "^5.27.0",
+    "@typescript-eslint/parser": "^5.27.0",
+    "apollo-server": "^3.8.1",
+    "eslint": "^8.16.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-jest": "^26.4.6",
+    "eslint-plugin-prettier": "^4.0.0",
+    "jest": "^28.1.0",
+    "jest-mock-extended": "^2.0.6",
+    "jest-ts-auto-mock": "^2.1.0",
+    "nodemon": "^2.0.16",
+    "prettier": "^2.6.2",
+    "ts-auto-mock": "^3.6.2",
+    "ts-jest": "^28.0.3",
+    "ts-node": "^10.8.0",
+    "ttypescript": "^1.5.13",
+    "typescript": "^4.7.2"
+  },
+  "dependencies": {
+    "@graphql-tools/graphql-file-loader": "^7.3.14",
+    "@graphql-tools/load": "^7.5.13",
+    "apollo-server-lambda": "^3.8.1",
+    "graphql": "^16.5.0"
+  },
+  "engines": {
+    "node": "16"
+  }
+}
