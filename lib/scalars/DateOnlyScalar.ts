@@ -26,5 +26,7 @@ export const DateOnlyScalar = {
   },
   parseLiteral(value: AST) {
     if (value.kind === Kind.STRING) return new Date(value as unknown as string);
+
+    throw new UserInputError(error);
   },
 };

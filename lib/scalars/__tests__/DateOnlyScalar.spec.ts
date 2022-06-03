@@ -1,5 +1,4 @@
 import { DateOnlyScalar } from "../DateOnlyScalar";
-import { createMock } from "ts-auto-mock";
 import { AST } from "prettier";
 import { Kind } from "graphql";
 
@@ -36,13 +35,16 @@ describe("parseValue", () => {
 describe("parseLiteral", () => {
   it("parses date string to date object", () => {
     const { dateOnlyScalar, date, astDate } = makeFactory();
-    expect(dateOnlyScalar.parseLiteral(astDate).toDateString()).toEqual(
-      date.toDateString()
-    );
+    const actualDate = (
+      dateOnlyScalar.parseLiteral(astDate) as Date
+    ).toDateString();
+
+    expect(actualDate).toEqual(date.toDateString());
   });
 
-  it.skip("parses literal to null having invalid type date", () => {
-    // tood
+  it("errors having invalid type date", () => {
+    const { dateOnlyScalar, invalidAstDate } = makeFactory();
+    expect(() => dateOnlyScalar.parseLiteral(invalidAstDate)).toThrowError();
   });
 });
 
@@ -57,6 +59,7 @@ function makeFactory() {
     kind: Kind.STRING,
     toString: () => serializedDate,
   };
+  const invalidAstDate: AST = { kind: Kind.INT };
 
   return {
     dateOnlyScalar,
@@ -66,5 +69,6 @@ function makeFactory() {
     illogicalDate,
     invalidFormatButValidDate,
     astDate,
+    invalidAstDate,
   };
 }
