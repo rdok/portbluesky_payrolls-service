@@ -6,7 +6,7 @@ export class S3Policy {
   constructor(stack: Stack, { role, stackRegex }: RolePolicyProps) {
     const managedPolicy = new ManagedPolicy(stack, "S3Policy", {
       description: `Policy to manage S3 service: ${stack.stackName}`,
-      roles: [role]
+      roles: [role],
     });
 
     managedPolicy.addStatements(
@@ -24,8 +24,8 @@ export class S3Policy {
           "s3:DeleteObject",
           "s3:GetBucketPolicy",
           "s3:PutBucketPolicy",
-          "s3:DeleteBucketPolicy"
-        ]
+          "s3:DeleteBucketPolicy",
+        ],
       })
     );
   }

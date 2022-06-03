@@ -1,14 +1,16 @@
 # payrolls-service
+
 > Generates company payrolls. Serverless GraphQL to calculate the dates on which to pay sales staff.
 
 [![Deploy][badge_svg_deploy]][workflow_link_deploy]
 [![Check][badge_svg_check]][workflow_link_check]
 
 # Acceptance Criteria
+
 - Sales staff are paid a regular ﬁxed base salary each month, plus a regular monthly bonus.
 - Base salaries are paid on the last day of each month, unless that day is a Saturday or Sunday (a weekend), in which case they are paid on the Friday before the weekend
 - On the 15th of each month, bonuses are paid for the previous month, unless that day is a weekend, in which case they are paid on the first Wednesday after the 15th.
-- Accept a date as a parameter, and return the payment dates for the following 12 months, including the supplied date.  Results should be returned in CSV format.
+- Accept a date as a parameter, and return the payment dates for the following 12 months, including the supplied date. Results should be returned in CSV format.
 - The API is consumed a browser-based company intranet, written in a frontend framework such as React.
 
 ![Slack Monitor Showcase](./slack-showcase.png)

@@ -28,12 +28,12 @@ test("Authorise management of S3 storage", () => {
             "s3:DeleteObject",
             "s3:GetBucketPolicy",
             "s3:PutBucketPolicy",
-            "s3:DeleteBucketPolicy"
+            "s3:DeleteBucketPolicy",
           ],
           Effect: "Allow",
-          Resource: `arn:aws:s3:::${stackRegex}`
-        }
-      ])
-    }
+          Resource: `arn:aws:s3:::${stackRegex}`,
+        },
+      ]),
+    },
   });
 });

@@ -4,9 +4,10 @@ import {
 } from "aws-lambda/trigger/api-gateway-proxy";
 import { createMock } from "ts-auto-mock";
 import { Context } from "aws-lambda";
+import { handler } from "../graphql";
 
 it("checks health status", async () => {
-  const { handler, event, context, callback } = await makeGraphQLHandler();
+  const { event, context, callback } = await makeGraphQLHandler();
 
   const response = await handler(event, context, callback);
 
@@ -17,7 +18,6 @@ it("checks health status", async () => {
 });
 
 async function makeGraphQLHandler(): Promise<any> {
-  const { handler } = await import("../graphql");
   const event = createMock<APIGatewayProxyEvent>({
     isBase64Encoded: false,
     httpMethod: "POST",
@@ -29,5 +29,5 @@ async function makeGraphQLHandler(): Promise<any> {
   });
   const context = createMock<Context>();
   const callback = createMock<APIGatewayProxyCallback>();
-  return { handler, event, context, callback };
+  return { event, context, callback };
 }
