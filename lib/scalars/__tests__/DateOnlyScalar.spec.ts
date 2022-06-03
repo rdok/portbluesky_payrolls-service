@@ -22,8 +22,11 @@ describe("parseValue", () => {
     ).toThrowError();
   });
 
-  it.skip("parses date string to date object", () => {
-    // tood
+  it("parses date string to date object", () => {
+    const { dateOnlyScalar, serializedDate, date } = makeFactory();
+    expect(dateOnlyScalar.parseValue(serializedDate).toDateString()).toEqual(
+      date.toDateString()
+    );
   });
 });
 describe("parseLiteral", () => {
