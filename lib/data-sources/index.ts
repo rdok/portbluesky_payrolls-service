@@ -1,9 +1,9 @@
-import { PlaceHolder } from "./PlaceHolder";
+import { PayrollDataSource } from "./PayrollDataSource";
 
 export type DataSources = {
-  placeHolder: PlaceHolder;
+  payrollDataSource: PayrollDataSource;
 };
 
 export const dataSources = (): DataSources => ({
-  placeHolder: new PlaceHolder(),
+  payrollDataSource: new PayrollDataSource(),
 });
