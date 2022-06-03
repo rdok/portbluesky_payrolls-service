@@ -56,6 +56,7 @@ Resources:
         Rules:
           - ExpirationInDays: 1
             Prefix: payrolls
+            Status: Enabled
   MonitorLambdaErrors:
     Type: AWS::CloudWatch::Alarm
     Properties:
