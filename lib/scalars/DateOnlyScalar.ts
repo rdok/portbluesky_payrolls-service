@@ -1,5 +1,7 @@
 import { Kind } from "graphql";
 import { UserInputError } from "apollo-server-lambda";
+import { AST } from "prettier";
+import { logError } from "../utils";
 
 const error = "Expected date format: 01/31/2020";
 
@@ -21,5 +23,8 @@ export const DateOnlyScalar = {
     if (!/^\d{4}-\d{1,2}-\d{1,2}$/.test(value)) throw new UserInputError(error);
 
     return new Date(value);
+  },
+  parseLiteral(value: AST) {
+    if (value.kind === Kind.STRING) return new Date(value as unknown as string);
   },
 };
