@@ -1,7 +1,7 @@
 import { resolvers } from "../index";
 import { Context } from "../../config";
 import { createMock } from "ts-auto-mock";
-import { CreatePayrollInput, PayrollMeta } from "../../types.generated";
+import { MutationCreatePayrollArgs, PayrollMeta } from "../../types.generated";
 import { PayrollDataSource } from "../../data-sources/PayrollDataSource";
 
 it("creates a payroll", async () => {
@@ -17,7 +17,7 @@ function makeFactory() {
   context.dataSources.payrollDataSource = createMock<PayrollDataSource>({
     create: jest.fn().mockResolvedValue(payrollMeta),
   });
-  const args = createMock<CreatePayrollInput>();
+  const args = createMock<MutationCreatePayrollArgs>();
 
   return { context, payrollMeta, args };
 }
