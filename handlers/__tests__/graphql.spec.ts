@@ -6,7 +6,7 @@ import { createMock } from "ts-auto-mock";
 import { Context } from "aws-lambda";
 import { handler } from "../graphql";
 
-it("checks health status", async () => {
+test("GraphQL lambda runs successfully", async () => {
   const { event, context, callback } = await makeGraphQLHandler();
 
   const response = await handler(event, context, callback);
