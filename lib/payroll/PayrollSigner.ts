@@ -1,5 +1,5 @@
 export class PayrollSigner {
   sign(bla: any) {
-    return Promise.resolve("lorem");
+    return Promise.resolve(bla);
   }
 }
