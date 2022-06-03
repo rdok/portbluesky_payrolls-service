@@ -3,6 +3,7 @@ import { createMock } from "ts-auto-mock";
 import { CreatePayrollInput } from "../../types.generated";
 import { PayrollCreator } from "../../payroll/PayrollCreator";
 import { PayrollS3 } from "../../payroll/PayrollS3";
+import { PayrollSigner } from "../../payroll/PayrollSigner";
 
 it("creates a payroll for the given date", async () => {
   const { payrollDataSource, input, payrollCreator } = makeFactory();
@@ -15,22 +16,43 @@ it("uploads the payroll as CSV in S3", async () => {
   await payrollDataSource.create(input);
   expect(payrollS3.upload).toHaveBeenCalledWith(payrollFile);
 });
-//
-// it("generates a pre signed url for the S3 payroll file");
+
+it("generates a pre signed url for the S3 payroll file", async () => {
+  const { payrollDataSource, input, payrollSigner, uploadedS3Payroll } =
+    makeFactory();
+  await payrollDataSource.create(input);
+  expect(payrollSigner.sign).toHaveBeenCalledWith(uploadedS3Payroll);
+});
 //
 // it("responds with payroll meta");
 
 function makeFactory() {
   const payrollFile = jest.fn();
-  const payrollS3 = createMock<PayrollS3>();
+  const uploadedS3Payroll = jest.fn();
+
+  const payrollS3 = createMock<PayrollS3>({
+    upload: jest.fn().mockResolvedValue(uploadedS3Payroll),
+  });
+  const payrollSigner = createMock<PayrollSigner>({
+    sign: jest.fn().mockResolvedValue(uploadedS3Payroll),
+  });
   const payrollCreator = createMock<PayrollCreator>({
     handle: jest.fn().mockResolvedValue(payrollFile),
   });
   const payrollDataSource = new PayrollDataSource({
     payrollCreator,
     payrollS3,
+    payrollSigner,
   });
   const input = createMock<CreatePayrollInput>();
 
-  return { payrollDataSource, input, payrollCreator, payrollFile, payrollS3 };
+  return {
+    payrollDataSource,
+    input,
+    payrollCreator,
+    payrollFile,
+    payrollS3,
+    payrollSigner,
+    uploadedS3Payroll,
+  };
 }
