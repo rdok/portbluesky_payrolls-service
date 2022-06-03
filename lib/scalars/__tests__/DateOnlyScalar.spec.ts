@@ -10,8 +10,9 @@ describe("parseValue", () => {
     const { dateOnlyScalar, invalidateDateType } = makeFactory();
     expect(() => dateOnlyScalar.parseValue(invalidateDateType)).toThrowError();
   });
-  it.skip("errors having invalid logical dates", () => {
-    // tood
+  it("errors having invalid logical dates", () => {
+    const { dateOnlyScalar, illogicalDate } = makeFactory();
+    expect(() => dateOnlyScalar.parseValue(illogicalDate)).toThrowError();
   });
 
   it.skip("errors having invalid format but valid dates", () => {
@@ -37,6 +38,13 @@ function makeFactory() {
   const serializedDate = "2077-1-31";
   const date = new Date(serializedDate);
   const invalidateDateType = 123;
+  const illogicalDate = "2077-1-77";
 
-  return { dateOnlyScalar, serializedDate, date, invalidateDateType };
+  return {
+    dateOnlyScalar,
+    serializedDate,
+    date,
+    invalidateDateType,
+    illogicalDate,
+  };
 }

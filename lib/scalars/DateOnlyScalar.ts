@@ -13,5 +13,9 @@ export const DateOnlyScalar = {
   },
   parseValue(value: any) {
     if (typeof value !== "string") throw new UserInputError(error);
+
+    const date = new Date(value);
+
+    if (isNaN(date.getDate())) throw new UserInputError(error);
   },
 };
