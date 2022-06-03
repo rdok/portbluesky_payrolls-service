@@ -1,9 +1,8 @@
 import { Kind } from "graphql";
 import { UserInputError } from "apollo-server-lambda";
 import { AST } from "prettier";
-import { logError } from "../utils";
 
-const error = "Expected date format: 01/31/2020";
+const error = "Expected date format: 2020-01-31";
 
 export const DateOnlyScalar = {
   name: "DateOnly",
