@@ -29,6 +29,8 @@ test("Authorise management of S3 storage", () => {
             "s3:GetBucketPolicy",
             "s3:PutBucketPolicy",
             "s3:DeleteBucketPolicy",
+            "s3:GetLifecycleConfiguration",
+            "s3:PutLifecycleConfiguration"
           ],
           Effect: "Allow",
           Resource: `arn:aws:s3:::${stackRegex}`,
