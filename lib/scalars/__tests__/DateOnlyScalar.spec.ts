@@ -2,13 +2,13 @@ import { DateOnlyScalar } from "../DateOnlyScalar";
 
 it("serialises a date", () => {
   const { dateOnlyScalar, date, serializedDate } = makeFactory();
-
   expect(dateOnlyScalar.serialize(date)).toBe(serializedDate);
 });
 
 describe("parseValue", () => {
-  it.skip("errors when date is not a string", () => {
-    // tood
+  it("errors when date is not a string", () => {
+    const { dateOnlyScalar, invalidateDateType } = makeFactory();
+    expect(() => dateOnlyScalar.parseValue(invalidateDateType)).toThrowError();
   });
   it.skip("errors having invalid logical dates", () => {
     // tood
@@ -36,5 +36,7 @@ function makeFactory() {
   const dateOnlyScalar = DateOnlyScalar;
   const serializedDate = "2077-1-31";
   const date = new Date(serializedDate);
-  return { dateOnlyScalar, serializedDate, date };
+  const invalidateDateType = 123;
+
+  return { dateOnlyScalar, serializedDate, date, invalidateDateType };
 }
