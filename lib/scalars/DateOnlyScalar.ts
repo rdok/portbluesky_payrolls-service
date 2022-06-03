@@ -17,5 +17,7 @@ export const DateOnlyScalar = {
     const date = new Date(value);
 
     if (isNaN(date.getDate())) throw new UserInputError(error);
+
+    if (!/^\d{4}-\d{1,2}-\d{1,2}$/.test(value)) throw new UserInputError(error);
   },
 };
