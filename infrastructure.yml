@@ -77,16 +77,16 @@ Resources:
         - Fn::ImportValue: !Sub "${AwsChatbotStackName}-ErrorsListenerArn"
       OKActions:
         - Fn::ImportValue: !Sub "${AwsChatbotStackName}-ErrorsListenerArn"
-#  GraphQLErrorsMetricFilter:
-#    Type: AWS::Logs::MetricFilter
-#    DependsOn: [GraphQL]
-#    Properties:
-#      LogGroupName: !Sub "/aws/lambda/${GraphQL}"
-#      FilterPattern: "DID_ENCOUNTER_ERRORS -TOKEN_EXPIRED_ERROR -BOT_TOKEN_MISSING_ERROR"
-#      MetricTransformations:
-#        - MetricValue: 1
-#          MetricNamespace: GraphQL/Errors
-#          MetricName: !Sub "${GraphQL}/DidEncounterErrors"
+  GraphQLErrorsMetricFilter:
+    Type: AWS::Logs::MetricFilter
+    DependsOn: [GraphQL]
+    Properties:
+      LogGroupName: !Sub "/aws/lambda/${GraphQL}"
+      FilterPattern: "DID_ENCOUNTER_ERRORS -TOKEN_EXPIRED_ERROR -BOT_TOKEN_MISSING_ERROR"
+      MetricTransformations:
+        - MetricValue: 1
+          MetricNamespace: GraphQL/Errors
+          MetricName: !Sub "${GraphQL}/DidEncounterErrors"
 Outputs:
   GraphQLEndpoint:
     Description: "API Gateway endpoint URL"

@@ -7,6 +7,9 @@
 
 - Request from client the website domain which will consume this API. Add said domain to CORS.
 
+![Slack Monitor Showcase](./slack-showcase.png)
+
+
 # Features
 
 - Run `make` for local development and to view the GraphQL schema in Apollo Studio
