@@ -1,3 +1,20 @@
 type Query {
   healthCheck: String
 }
+
+type Mutation {
+  createPayroll(createPayrollInput: CreatePayrollInput!): PayrollMeta
+}
+
+input CreatePayrollInput {
+  date: DateOnly!
+}
+
+" E.g. 2020-1-31 "
+scalar DateOnly
+
+type PayrollMeta {
+  ExpiresAt: String!
+  CreatedAt: String!
+  PreSignedUrl: String!
+}

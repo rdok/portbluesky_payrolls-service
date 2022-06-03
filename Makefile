@@ -22,13 +22,6 @@ start-sam: node_modules
 	make build
 	sam local start-api --port 3003
 
-deploy-cicd-auth:
-	cd cicd-authorisation && make deploy
-
-build-deploy-dev:
-	make build
-	make deploy-dev
-
 build-deploy-cicd:
 	make build
 	AWS_ROLE_ARN=$$(aws --profile $$AWS_PROFILE \

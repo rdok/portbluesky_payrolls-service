@@ -1,9 +1,10 @@
-import { GraphQLResolveInfo } from 'graphql';
+import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type RequireFields<T, K extends keyof T> = Omit<T, K> & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -11,6 +12,29 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  /**  E.g. 2020-1-31  */
+  DateOnly: any;
+};
+
+export type CreatePayrollInput = {
+  date: Scalars['DateOnly'];
+};
+
+export type Mutation = {
+  __typename?: 'Mutation';
+  createPayroll: Maybe<PayrollMeta>;
+};
+
+
+export type MutationCreatePayrollArgs = {
+  createPayrollInput: CreatePayrollInput;
+};
+
+export type PayrollMeta = {
+  __typename?: 'PayrollMeta';
+  CreatedAt: Scalars['String'];
+  ExpiresAt: Scalars['String'];
+  PreSignedUrl: Scalars['String'];
 };
 
 export type Query = {
@@ -84,6 +108,10 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
+  CreatePayrollInput: CreatePayrollInput;
+  DateOnly: ResolverTypeWrapper<Scalars['DateOnly']>;
+  Mutation: ResolverTypeWrapper<{}>;
+  PayrollMeta: ResolverTypeWrapper<PayrollMeta>;
   Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']>;
 };
@@ -91,8 +119,27 @@ export type ResolversTypes = {
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
   Boolean: Scalars['Boolean'];
+  CreatePayrollInput: CreatePayrollInput;
+  DateOnly: Scalars['DateOnly'];
+  Mutation: {};
+  PayrollMeta: PayrollMeta;
   Query: {};
   String: Scalars['String'];
+};
+
+export interface DateOnlyScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['DateOnly'], any> {
+  name: 'DateOnly';
+}
+
+export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
+  createPayroll: Resolver<Maybe<ResolversTypes['PayrollMeta']>, ParentType, ContextType, RequireFields<MutationCreatePayrollArgs, 'createPayrollInput'>>;
+};
+
+export type PayrollMetaResolvers<ContextType = any, ParentType extends ResolversParentTypes['PayrollMeta'] = ResolversParentTypes['PayrollMeta']> = {
+  CreatedAt: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  ExpiresAt: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  PreSignedUrl: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
@@ -100,6 +147,9 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
 };
 
 export type Resolvers<ContextType = any> = {
+  DateOnly: GraphQLScalarType;
+  Mutation: MutationResolvers<ContextType>;
+  PayrollMeta: PayrollMetaResolvers<ContextType>;
   Query: QueryResolvers<ContextType>;
 };
 

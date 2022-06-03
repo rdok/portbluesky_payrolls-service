@@ -38,6 +38,8 @@ Resources:
       CodeUri: dist
       Runtime: nodejs16.x
       Tracing: Active
+      Policies:
+        - S3FullAccessPolicy: { BucketName: !Ref FilesStorage }
       Events:
         Api:
           Type: Api
@@ -46,6 +48,14 @@ Resources:
         Variables:
           NODE_ENV: !Ref NodeENV
           CORS_ORIGINS_COMMA_DELIMITED: !Ref CorsOriginsCommaDelimited
+          S3_STORAGE_ARN: !Ref FilesStorage
+  FilesStorage:
+    Type: AWS::S3::Bucket
+    Properties:
+      LifecycleConfiguration:
+        Rules:
+          - ExpirationInDays: 1
+            Prefix: payrolls
   MonitorLambdaErrors:
     Type: AWS::CloudWatch::Alarm
     Properties:
