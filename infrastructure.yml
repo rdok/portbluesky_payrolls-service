@@ -51,6 +51,11 @@ Resources:
           S3_STORAGE_ARN: !Ref FilesStorage
   FilesStorage:
     Type: AWS::S3::Bucket
+    Properties:
+      LifecycleConfiguration:
+        Rules:
+          - ExpirationInDays: 1
+            Prefix: payrolls
   MonitorLambdaErrors:
     Type: AWS::CloudWatch::Alarm
     Properties:
