@@ -7,8 +7,11 @@ type Mutation {
 }
 
 input CreatePayrollInput {
-  date: String!
+  date: PayrollDate!
 }
+
+" E.g. 01/31/2020 "
+scalar PayrollDate
 
 type PayrollMeta {
   ExpiresAt: String!
