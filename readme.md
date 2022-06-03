@@ -9,7 +9,6 @@
 
 ![Slack Monitor Showcase](./slack-showcase.png)
 
-
 # Features
 
 - Run `make` for local development and to view the GraphQL schema in Apollo Studio
