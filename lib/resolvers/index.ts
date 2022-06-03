@@ -1,9 +1,10 @@
 import { Query } from "./Query";
 import { Mutation } from "./Mutation";
-import { payrollDateScalar } from "../scalars/payrollDateScalar";
+import { GraphQLScalarType } from "graphql";
+import { DateOnlyScalar } from "../scalars/DateOnlyScalar";
 
 const resolvers = {
-  PayrollDate: payrollDateScalar,
+  DateOnly: new GraphQLScalarType(DateOnlyScalar),
   Query,
   Mutation,
 };

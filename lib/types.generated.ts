@@ -12,11 +12,12 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  PayrollDate: any;
+  /**  E.g. 2020-1-31  */
+  DateOnly: any;
 };
 
 export type CreatePayrollInput = {
-  date: Scalars['PayrollDate'];
+  date: Scalars['DateOnly'];
 };
 
 export type Mutation = {
@@ -108,8 +109,8 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 export type ResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   CreatePayrollInput: CreatePayrollInput;
+  DateOnly: ResolverTypeWrapper<Scalars['DateOnly']>;
   Mutation: ResolverTypeWrapper<{}>;
-  PayrollDate: ResolverTypeWrapper<Scalars['PayrollDate']>;
   PayrollMeta: ResolverTypeWrapper<PayrollMeta>;
   Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']>;
@@ -119,20 +120,20 @@ export type ResolversTypes = {
 export type ResolversParentTypes = {
   Boolean: Scalars['Boolean'];
   CreatePayrollInput: CreatePayrollInput;
+  DateOnly: Scalars['DateOnly'];
   Mutation: {};
-  PayrollDate: Scalars['PayrollDate'];
   PayrollMeta: PayrollMeta;
   Query: {};
   String: Scalars['String'];
 };
 
+export interface DateOnlyScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['DateOnly'], any> {
+  name: 'DateOnly';
+}
+
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   createPayroll: Resolver<Maybe<ResolversTypes['PayrollMeta']>, ParentType, ContextType, RequireFields<MutationCreatePayrollArgs, 'createPayrollInput'>>;
 };
-
-export interface PayrollDateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['PayrollDate'], any> {
-  name: 'PayrollDate';
-}
 
 export type PayrollMetaResolvers<ContextType = any, ParentType extends ResolversParentTypes['PayrollMeta'] = ResolversParentTypes['PayrollMeta']> = {
   CreatedAt: Resolver<ResolversTypes['String'], ParentType, ContextType>;
@@ -146,8 +147,8 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
 };
 
 export type Resolvers<ContextType = any> = {
+  DateOnly: GraphQLScalarType;
   Mutation: MutationResolvers<ContextType>;
-  PayrollDate: GraphQLScalarType;
   PayrollMeta: PayrollMetaResolvers<ContextType>;
   Query: QueryResolvers<ContextType>;
 };
