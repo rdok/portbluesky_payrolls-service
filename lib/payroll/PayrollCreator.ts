@@ -40,6 +40,7 @@ export class PayrollCreator {
 
   bonusSalaryDate(date: Date) {
     const paymentDate = new Date(date.getTime());
+    paymentDate.setMonth(paymentDate.getMonth() + 1);
     paymentDate.setDate(15);
 
     const isSaturday = paymentDate.getDay() === 6;

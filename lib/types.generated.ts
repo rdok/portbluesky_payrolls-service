@@ -17,7 +17,7 @@ export type Scalars = {
 };
 
 export type CreatePayrollInput = {
-  date: Scalars['DateOnly'];
+  startDate: Scalars['DateOnly'];
 };
 
 export type Mutation = {

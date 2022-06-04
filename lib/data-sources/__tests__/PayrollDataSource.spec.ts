@@ -9,7 +9,7 @@ import { PayrollCsv } from "../../payroll/PayrollCsv";
 it("creates a payroll for the given date", async () => {
   const { payrollDataSource, input, payrollCreator } = makeFactory();
   await payrollDataSource.create(input);
-  expect(payrollCreator.handle).toHaveBeenCalledWith(input.date);
+  expect(payrollCreator.handle).toHaveBeenCalledWith(input.startDate);
 });
 
 it("converts payrolls to CSV", async () => {

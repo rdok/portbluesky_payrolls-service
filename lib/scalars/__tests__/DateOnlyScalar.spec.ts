@@ -50,11 +50,11 @@ describe("parseLiteral", () => {
 
 function makeFactory() {
   const dateOnlyScalar = DateOnlyScalar;
-  const serializedDate = "2077-1-31";
+  const serializedDate = "2077-1";
   const date = new Date(serializedDate);
   const invalidateDateType = 123;
-  const illogicalDate = "2077-1-77";
-  const invalidFormatButValidDate = "1/31/2077";
+  const illogicalDate = "2077-77";
+  const invalidFormatButValidDate = "1/1/2077";
   const astDate: AST = {
     kind: Kind.STRING,
     toString: () => serializedDate,

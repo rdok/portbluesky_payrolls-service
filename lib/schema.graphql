@@ -7,7 +7,7 @@ type Mutation {
 }
 
 input CreatePayrollInput {
-  date: DateOnly!
+  startDate: DateOnly!
 }
 
 " E.g. 2020-1-31 "
