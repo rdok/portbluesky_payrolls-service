@@ -3,6 +3,7 @@
 > Generates company payrolls. Serverless GraphQL to calculate the dates on which to pay sales staff.
 
 # cURL GraphQL Request - Production Environment
+
 ```
 curl --request POST \
   --header 'content-type: application/json' \
