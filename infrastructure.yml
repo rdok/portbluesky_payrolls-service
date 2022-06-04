@@ -7,6 +7,7 @@ Parameters:
   WildcardDomainCertArn: { Type: String }
   BaseDomainName: { Type: String }
   DomainHostedZoneID: { Type: String }
+  ExpiringPayrollFilesPrefix: { Type: String, Default: "expiring_payrolls" }
 Resources:
   API:
     Type: AWS::Serverless::Api
@@ -38,8 +39,7 @@ Resources:
       CodeUri: dist
       Runtime: nodejs16.x
       Tracing: Active
-      Policies:
-        - S3FullAccessPolicy: { BucketName: !Ref FilesStorage }
+      Policies: [S3FullAccessPolicy: { BucketName: !Ref FilesStorage }]
       Events:
         Api:
           Type: Api
@@ -49,13 +49,14 @@ Resources:
           NODE_ENV: !Ref NodeENV
           CORS_ORIGINS_COMMA_DELIMITED: !Ref CorsOriginsCommaDelimited
           S3_STORAGE_ARN: !Ref FilesStorage
+          EXPIRING_PAYROLL_FILES_PREFIX: !Ref ExpiringPayrollFilesPrefix
   FilesStorage:
     Type: AWS::S3::Bucket
     Properties:
       LifecycleConfiguration:
         Rules:
           - ExpirationInDays: 1
-            Prefix: payrolls
+            Prefix: !Ref ExpiringPayrollFilesPrefix
             Status: Enabled
   MonitorLambdaErrors:
     Type: AWS::CloudWatch::Alarm

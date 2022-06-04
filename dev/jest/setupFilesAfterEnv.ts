@@ -4,7 +4,9 @@ global.console = {
 };
 
 beforeEach(() => {
-  process.env.ENVIRONMENT_VARIABLE = "mocked_ENVIRONMENT_VARIABLE";
+  process.env.S3_STORAGE_ARN = "mocked_S3_STORAGE_ARN";
+  process.env.EXPIRING_PAYROLL_FILES_PREFIX =
+    "mocked_EXPIRING_PAYROLL_FILES_PREFIX";
 });
 
 afterEach(() => {
