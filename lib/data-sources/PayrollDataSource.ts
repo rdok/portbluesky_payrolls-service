@@ -4,14 +4,14 @@ import { PayrollCreator } from "../payroll/PayrollCreator";
 import { PayrollS3 } from "../payroll/PayrollS3";
 import { PayrollSigner } from "../payroll/PayrollSigner";
 import { PayrollTransformer } from "../payroll/PayrollTransformer";
-import { Csv } from "../services/Csv";
+import { PayrollCsv } from "../payroll/PayrollCsv";
 
 export class PayrollDataSource extends DataSource {
   private payrollCreator: PayrollCreator;
   private payrollS3: PayrollS3;
   private payrollSigner: PayrollSigner;
   private payrollTransformer: PayrollTransformer;
-  private csv: Csv;
+  private payrollCsv: PayrollCsv;
 
   constructor(props: Props) {
     super();
@@ -19,12 +19,12 @@ export class PayrollDataSource extends DataSource {
     this.payrollS3 = props.payrollS3;
     this.payrollSigner = props.payrollSigner;
     this.payrollTransformer = props.payrollTransformer;
-    this.csv = props.csv;
+    this.payrollCsv = props.payrollCsv;
   }
 
   async create(input: CreatePayrollInput): Promise<PayrollMeta> {
     const payrolls = this.payrollCreator.handle(input.date);
-    const payrollsCsv = await this.csv.generate(payrolls);
+    const payrollsCsv = await this.payrollCsv.generate(payrolls);
     const uploadedS3Payroll = await this.payrollS3.upload(payrollsCsv);
     await this.payrollSigner.sign(uploadedS3Payroll);
 
@@ -37,5 +37,5 @@ type Props = {
   payrollS3: PayrollS3;
   payrollSigner: PayrollSigner;
   payrollTransformer: PayrollTransformer;
-  csv: Csv;
+  payrollCsv: PayrollCsv;
 };

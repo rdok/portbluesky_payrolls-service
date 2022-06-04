@@ -4,14 +4,14 @@ import { PayrollS3 } from "../payroll/PayrollS3";
 import { PayrollSigner } from "../payroll/PayrollSigner";
 import { PayrollTransformer } from "../payroll/PayrollTransformer";
 import { S3Client } from "@aws-sdk/client-s3";
-import { Csv } from "../services/Csv";
+import { PayrollCsv } from "../payroll/PayrollCsv";
 
 export type DataSources = {
   payrollDataSource: PayrollDataSource;
 };
 
 const payrollCreator = new PayrollCreator();
-const csv = new Csv();
+const payrollCsv = new PayrollCsv();
 
 const s3Client = new S3Client({ region: process.env.AWS_REGION });
 const payrollS3 = new PayrollS3({ s3Client });
@@ -23,7 +23,7 @@ const payrollDataSource = new PayrollDataSource({
   payrollS3,
   payrollSigner,
   payrollTransformer,
-  csv,
+  payrollCsv,
 });
 
 export const dataSources = (): DataSources => ({

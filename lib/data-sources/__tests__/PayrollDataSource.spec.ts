@@ -5,7 +5,7 @@ import { PayrollCreator } from "../../payroll/PayrollCreator";
 import { PayrollS3 } from "../../payroll/PayrollS3";
 import { PayrollSigner } from "../../payroll/PayrollSigner";
 import { PayrollTransformer } from "../../payroll/PayrollTransformer";
-import { Csv } from "../../services/Csv";
+import { PayrollCsv } from "../../payroll/PayrollCsv";
 
 it("creates a payroll for the given date", async () => {
   const { payrollDataSource, input, payrollCreator } = makeFactory();
@@ -14,9 +14,9 @@ it("creates a payroll for the given date", async () => {
 });
 
 it("converts payrolls to CSV", async () => {
-  const { payrollDataSource, input, payrolls, csv } = makeFactory();
+  const { payrollDataSource, input, payrolls, payrollCsv } = makeFactory();
   await payrollDataSource.create(input);
-  expect(csv.generate).toHaveBeenCalledWith(payrolls);
+  expect(payrollCsv.generate).toHaveBeenCalledWith(payrolls);
 });
 
 it("uploads the payroll CSV in S3", async () => {
@@ -48,7 +48,7 @@ function makeFactory() {
     handle: jest.fn().mockReturnValue(payrolls),
   });
 
-  const csv = createMock<Csv>({
+  const payrollCsv = createMock<PayrollCsv>({
     generate: jest.fn().mockResolvedValue(payrollsCsv),
   });
   const payrollS3 = createMock<PayrollS3>({
@@ -65,7 +65,7 @@ function makeFactory() {
     payrollS3,
     payrollSigner,
     payrollTransformer,
-    csv,
+    payrollCsv,
   });
   const input = createMock<CreatePayrollInput>();
 
@@ -80,6 +80,6 @@ function makeFactory() {
     payrollTransformer,
     payrollMeta,
     payrollsCsv,
-    csv,
+    payrollCsv,
   };
 }
