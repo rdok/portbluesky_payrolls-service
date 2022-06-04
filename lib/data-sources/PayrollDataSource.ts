@@ -3,14 +3,12 @@ import { CreatePayrollInput, PayrollMeta } from "../types.generated";
 import { PayrollCreator } from "../payroll/PayrollCreator";
 import { PayrollS3 } from "../payroll/PayrollS3";
 import { PayrollSigner } from "../payroll/PayrollSigner";
-import { PayrollTransformer } from "../payroll/PayrollTransformer";
 import { PayrollCsv } from "../payroll/PayrollCsv";
 
 export class PayrollDataSource extends DataSource {
   private payrollCreator: PayrollCreator;
   private payrollS3: PayrollS3;
   private payrollSigner: PayrollSigner;
-  private payrollTransformer: PayrollTransformer;
   private payrollCsv: PayrollCsv;
 
   constructor(props: Props) {
@@ -18,17 +16,20 @@ export class PayrollDataSource extends DataSource {
     this.payrollCreator = props.payrollCreator;
     this.payrollS3 = props.payrollS3;
     this.payrollSigner = props.payrollSigner;
-    this.payrollTransformer = props.payrollTransformer;
     this.payrollCsv = props.payrollCsv;
   }
 
   async create(input: CreatePayrollInput): Promise<PayrollMeta> {
     const payrolls = this.payrollCreator.handle(input.date);
     const payrollsCsv = await this.payrollCsv.generate(payrolls);
-    const uploadedS3Payroll = await this.payrollS3.upload(payrollsCsv);
-    await this.payrollSigner.sign(uploadedS3Payroll);
+    const payrollS3Output = await this.payrollS3.upload(payrollsCsv);
+    const preSignedUrl = await this.payrollSigner.sign(payrollS3Output);
 
-    return this.payrollTransformer.transform();
+    return {
+      ExpiresAt: new Date().toDateString(),
+      CreatedAt: new Date().toDateString(),
+      PreSignedUrl: preSignedUrl,
+    };
   }
 }
 
@@ -36,6 +37,5 @@ type Props = {
   payrollCreator: PayrollCreator;
   payrollS3: PayrollS3;
   payrollSigner: PayrollSigner;
-  payrollTransformer: PayrollTransformer;
   payrollCsv: PayrollCsv;
 };

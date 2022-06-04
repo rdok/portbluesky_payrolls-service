@@ -7,7 +7,7 @@ Parameters:
   WildcardDomainCertArn: { Type: String }
   BaseDomainName: { Type: String }
   DomainHostedZoneID: { Type: String }
-  ExpiringPayrollFilesPrefix: { Type: String, Default: 'expiring_payrolls' }
+  ExpiringPayrollFilesPrefix: { Type: String, Default: "expiring_payrolls" }
 Resources:
   API:
     Type: AWS::Serverless::Api
@@ -39,8 +39,7 @@ Resources:
       CodeUri: dist
       Runtime: nodejs16.x
       Tracing: Active
-      Policies:
-        - S3FullAccessPolicy: { BucketName: !Ref FilesStorage }
+      Policies: [S3FullAccessPolicy: { BucketName: !Ref FilesStorage }]
       Events:
         Api:
           Type: Api
