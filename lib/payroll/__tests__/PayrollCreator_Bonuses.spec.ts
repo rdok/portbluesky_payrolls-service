@@ -11,6 +11,12 @@ it("pays bonuses on the first Wednesday after 15th, when 15th is Saturday", () =
   expect(payrollCreator.bonusSalaryDate(date)).toEqual(firstWednesdayAfter15th);
 });
 
+it("pays bonuses on the first Wednesday after 15th, when 15th is Sunday", () => {
+  const { payrollCreator, firstWednesdayAfter15th, date } =
+    makeFactoryWith15thSunday();
+  expect(payrollCreator.bonusSalaryDate(date)).toEqual(firstWednesdayAfter15th);
+});
+
 function makeFactory() {
   const payrollCreator = new PayrollCreator();
   const paymentDate15th = "2022-2-15";
@@ -20,9 +26,18 @@ function makeFactory() {
 
 function makeFactoryWith15thSaturday() {
   const payrollCreator = new PayrollCreator();
-  // 2022-04-15 -> Saturday
   const firstWednesdayAfter15th = "2022-1-19";
   const date = new Date("2022-01-07");
+  return {
+    payrollCreator,
+    firstWednesdayAfter15th,
+    date,
+  };
+}
+function makeFactoryWith15thSunday() {
+  const payrollCreator = new PayrollCreator();
+  const firstWednesdayAfter15th = "2022-5-18";
+  const date = new Date("2022-05-22");
   return {
     payrollCreator,
     firstWednesdayAfter15th,
