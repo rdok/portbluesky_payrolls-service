@@ -17,4 +17,14 @@ export class PayrollCreator {
 
     return lastDayOfMonth;
   }
+
+  bonusSalaryDate(date: Date) {
+    const paymentDate = date;
+    paymentDate.setDate(15);
+
+    const isSaturday = paymentDate.getDay() === 6;
+    if (isSaturday) paymentDate.setDate(paymentDate.getDate() + 4);
+
+    return paymentDate;
+  }
 }

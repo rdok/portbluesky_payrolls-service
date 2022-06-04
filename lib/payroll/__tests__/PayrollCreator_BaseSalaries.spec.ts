@@ -1,4 +1,3 @@
-// - Sales staff are paid a regular ﬁxed base salary each month, plus a regular monthly bonus.
 import { PayrollCreator } from "../PayrollCreator";
 
 describe("Base salaries", () => {
@@ -22,26 +21,6 @@ describe("Base salaries", () => {
         lastFridayOfMonth
       );
     });
-  });
-});
-
-describe("Bonuses", () => {
-  it.skip("pays bonuses for the previous month, on the 15th of each month", () => {
-    // TODO
-  });
-
-  it.skip("pays bonuses on the first Wednesday after 15th, when 15th is a weekend day", () => {
-    // TODO
-  });
-});
-
-describe("Payment dates", () => {
-  it.skip("returns payment dates for the following 12 months", () => {
-    // TODO
-  });
-
-  it.skip("includes the supplied date on the returned payment dates", () => {
-    // TODO
   });
 });
 
