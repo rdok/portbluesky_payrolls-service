@@ -14,14 +14,24 @@ export class PayrollSigner {
     this.getSignedUrl = props.getSignedUrl;
   }
 
-  async sign(payrollS3Output: PayrollS3Output): Promise<string> {
+  async sign(payrollS3Output: PayrollS3Output): Promise<PayrollSignedOutput> {
     const command = new GetObjectCommand({
       Bucket: payrollS3Output.bucket,
       Key: payrollS3Output.key,
     });
     const expiresInAnHour = 3600;
-    return this.getSignedUrl(this.s3Client, command, {
+    const preSignedUrl = await this.getSignedUrl(this.s3Client, command, {
       expiresIn: expiresInAnHour,
     });
+
+    const expiresAt = new Date();
+    expiresAt.setSeconds(expiresAt.getSeconds() + expiresInAnHour);
+
+    return { preSignedUrl, expiresAt };
   }
 }
+
+export type PayrollSignedOutput = {
+  preSignedUrl: string;
+  expiresAt: Date;
+};
