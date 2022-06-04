@@ -1,21 +1,30 @@
 import { PayrollDataSource } from "../PayrollDataSource";
 import { createMock } from "ts-auto-mock";
-import { CreatePayrollInput, PayrollMeta } from "../../types.generated";
+import { CreatePayrollInput } from "../../types.generated";
 import { PayrollCreator } from "../../payroll/PayrollCreator";
 import { PayrollS3 } from "../../payroll/PayrollS3";
-import { PayrollSigner } from "../../payroll/PayrollSigner";
-import { PayrollTransformer } from "../../payroll/PayrollTransformer";
+import {
+  PayrollSignedOutput,
+  PayrollSigner,
+} from "../../payroll/PayrollSigner";
+import { PayrollCsv } from "../../payroll/PayrollCsv";
 
 it("creates a payroll for the given date", async () => {
   const { payrollDataSource, input, payrollCreator } = makeFactory();
   await payrollDataSource.create(input);
-  expect(payrollCreator.handle).toHaveBeenCalledWith(input.date);
+  expect(payrollCreator.handle).toHaveBeenCalledWith(input.startDate);
 });
 
-it("uploads the payroll as CSV in S3", async () => {
-  const { payrollDataSource, input, payrollS3, payrollFile } = makeFactory();
+it("converts payrolls to CSV", async () => {
+  const { payrollDataSource, input, payrolls, payrollCsv } = makeFactory();
   await payrollDataSource.create(input);
-  expect(payrollS3.upload).toHaveBeenCalledWith(payrollFile);
+  expect(payrollCsv.generate).toHaveBeenCalledWith(payrolls);
+});
+
+it("uploads the payroll CSV in S3", async () => {
+  const { payrollDataSource, input, payrollS3, payrollsCsv } = makeFactory();
+  await payrollDataSource.create(input);
+  expect(payrollS3.upload).toHaveBeenCalledWith(payrollsCsv);
 });
 
 it("generates a pre signed url for the S3 payroll file", async () => {
@@ -25,34 +34,51 @@ it("generates a pre signed url for the S3 payroll file", async () => {
   expect(payrollSigner.sign).toHaveBeenCalledWith(uploadedS3Payroll);
 });
 
-it("responds with payroll meta", async () => {
-  const { payrollDataSource, input, payrollMeta } = makeFactory();
+it("includes the pre-sign url on the response", async () => {
+  const { payrollDataSource, input, payrollSignedOutput } = makeFactory();
   const response = await payrollDataSource.create(input);
-  expect(response).toEqual(payrollMeta);
+  expect(response).toEqual(
+    expect.objectContaining({
+      PreSignedUrl: payrollSignedOutput.preSignedUrl,
+    })
+  );
+});
+
+it("includes the expiration date on the response", async () => {
+  const { payrollDataSource, input, payrollSignedOutput } = makeFactory();
+  const response = await payrollDataSource.create(input);
+  expect(response).toEqual(
+    expect.objectContaining({
+      ExpiresAt: payrollSignedOutput.expiresAt.toISOString(),
+    })
+  );
 });
 
 function makeFactory() {
-  const payrollFile = jest.fn();
+  const payrolls = jest.fn();
   const uploadedS3Payroll = jest.fn();
-  const payrollMeta = createMock<PayrollMeta>();
+  const payrollsCsv = jest.fn();
 
+  const payrollCreator = createMock<PayrollCreator>({
+    handle: jest.fn().mockReturnValue(payrolls),
+  });
+
+  const payrollCsv = createMock<PayrollCsv>({
+    generate: jest.fn().mockResolvedValue(payrollsCsv),
+  });
   const payrollS3 = createMock<PayrollS3>({
     upload: jest.fn().mockResolvedValue(uploadedS3Payroll),
   });
-  const payrollTransformer = createMock<PayrollTransformer>({
-    transform: jest.fn().mockReturnValue(payrollMeta),
-  });
+
+  const payrollSignedOutput = createMock<PayrollSignedOutput>();
   const payrollSigner = createMock<PayrollSigner>({
-    sign: jest.fn().mockResolvedValue(uploadedS3Payroll),
-  });
-  const payrollCreator = createMock<PayrollCreator>({
-    handle: jest.fn().mockResolvedValue(payrollFile),
+    sign: jest.fn().mockResolvedValue(payrollSignedOutput),
   });
   const payrollDataSource = new PayrollDataSource({
     payrollCreator,
     payrollS3,
     payrollSigner,
-    payrollTransformer,
+    payrollCsv,
   });
   const input = createMock<CreatePayrollInput>();
 
@@ -60,11 +86,12 @@ function makeFactory() {
     payrollDataSource,
     input,
     payrollCreator,
-    payrollFile,
+    payrolls,
     payrollS3,
     payrollSigner,
     uploadedS3Payroll,
-    payrollTransformer,
-    payrollMeta,
+    payrollsCsv,
+    payrollCsv,
+    payrollSignedOutput,
   };
 }
