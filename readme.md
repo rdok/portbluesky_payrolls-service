@@ -23,7 +23,9 @@ curl --request POST \
 ```
 
 # Features
+
 ### Primary
+
 - Fully serverless, scalable. Zero dependencies. Sub-domain, API Gateway, S3, Lambda, Alarms. See `infrastructure.yml`.
 - Generates & provides TS types. Frontend may import these for their GraphQL queries.
 - Payroll files are temporarily stored in S3 bucket; they are deleted after a day.
@@ -38,6 +40,7 @@ curl --request POST \
 ![Multiple Environments](./markdown/multiple-environments.png)
 
 ### Secondary
+
 - Run `make` for local development and to view the GraphQL schema in Apollo Studio
 - Compiles NodeJS TypeScript to JS for AWS Lambda.
 - Uses SAM template to create API Gateway, Lambda function with GraphQL
