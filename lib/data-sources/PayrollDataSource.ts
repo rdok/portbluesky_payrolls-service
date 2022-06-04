@@ -20,7 +20,7 @@ export class PayrollDataSource extends DataSource {
   }
 
   async create(input: CreatePayrollInput): Promise<PayrollMeta> {
-    const payroll = await this.payrollCreator.handle(input.date);
+    const payroll = this.payrollCreator.handle(input.date);
     const uploadedS3Payroll = await this.payrollS3.upload(payroll);
     await this.payrollSigner.sign(uploadedS3Payroll);
 

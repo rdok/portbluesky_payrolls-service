@@ -36,6 +36,9 @@ function makeFactory() {
   const uploadedS3Payroll = jest.fn();
   const payrollMeta = createMock<PayrollMeta>();
 
+  const payrollCreator = createMock<PayrollCreator>({
+    handle: jest.fn().mockReturnValue(payrollFile),
+  });
   const payrollS3 = createMock<PayrollS3>({
     upload: jest.fn().mockResolvedValue(uploadedS3Payroll),
   });
@@ -44,9 +47,6 @@ function makeFactory() {
   });
   const payrollSigner = createMock<PayrollSigner>({
     sign: jest.fn().mockResolvedValue(uploadedS3Payroll),
-  });
-  const payrollCreator = createMock<PayrollCreator>({
-    handle: jest.fn().mockResolvedValue(payrollFile),
   });
   const payrollDataSource = new PayrollDataSource({
     payrollCreator,
