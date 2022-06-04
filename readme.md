@@ -23,9 +23,14 @@ curl --request POST \
 ```
 
 # Features
+- Fully serverless, scalable. Zero dependencies. Sub-domain, API Gateway, S3, Lambda, Alarms. See `infrastructure.yml`.
+- Generates & provides TS types. Frontend may import these for their GraphQL queries.
+- Payroll files are temporarily stored in S3 bucket; they are deleted after a day.
+- Provides pre-signed URL with access to the payroll S3 files; these also expire after an hour
 
 ![Apollo Studio GraphQL Showcase](./markdown/apollo-studio-showcase.png)
 ![CSV Showcase](./markdown/payrolls-csv-showcase.png)
+![Multiple Environments](./markdown/unit-tests-showcase.png)
 ![CI showcase](./markdown/ci-checks-showcase.png)
 ![Slack Monitor Showcase](./markdown/slack-showcase.png)
 ![Multiple Environments](./markdown/multiple-environments.png)
