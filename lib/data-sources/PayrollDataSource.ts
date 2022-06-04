@@ -26,7 +26,7 @@ export class PayrollDataSource extends DataSource {
     const preSignedUrl = await this.payrollSigner.sign(payrollS3Output);
 
     return {
-      ExpiresAt: preSignedUrl.expiresAt.toDateString(),
+      ExpiresAt: preSignedUrl.expiresAt.toISOString(),
       PreSignedUrl: preSignedUrl.preSignedUrl,
     };
   }

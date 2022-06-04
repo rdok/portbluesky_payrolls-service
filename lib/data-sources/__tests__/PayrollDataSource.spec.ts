@@ -49,7 +49,7 @@ it("includes the expiration date on the response", async () => {
   const response = await payrollDataSource.create(input);
   expect(response).toEqual(
     expect.objectContaining({
-      ExpiresAt: payrollSignedOutput.expiresAt.toDateString(),
+      ExpiresAt: payrollSignedOutput.expiresAt.toISOString(),
     })
   );
 });
