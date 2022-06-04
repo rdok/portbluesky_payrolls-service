@@ -10,11 +10,10 @@ input CreatePayrollInput {
   startDate: DateOnly!
 }
 
-" E.g. 2020-1-31 "
+" E.g. 2020-1 "
 scalar DateOnly
 
 type PayrollMeta {
   ExpiresAt: String!
-  CreatedAt: String!
   PreSignedUrl: String!
 }

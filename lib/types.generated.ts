@@ -32,7 +32,6 @@ export type MutationCreatePayrollArgs = {
 
 export type PayrollMeta = {
   __typename?: 'PayrollMeta';
-  CreatedAt: Scalars['String'];
   ExpiresAt: Scalars['String'];
   PreSignedUrl: Scalars['String'];
 };
@@ -136,7 +135,6 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
 };
 
 export type PayrollMetaResolvers<ContextType = any, ParentType extends ResolversParentTypes['PayrollMeta'] = ResolversParentTypes['PayrollMeta']> = {
-  CreatedAt: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   ExpiresAt: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   PreSignedUrl: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
