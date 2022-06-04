@@ -37,6 +37,7 @@ Resources:
       Handler: handlers/graphql.handler
       CodeUri: dist
       Runtime: nodejs16.x
+      MemorySize: 256
       Tracing: Active
       Policies:
         - S3FullAccessPolicy: { BucketName: !Ref FilesStorage }
