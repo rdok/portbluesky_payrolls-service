@@ -10,7 +10,7 @@ export class PayrollS3 {
     this.s3Client = props.s3Client;
   }
 
-  async upload(payrolls: Payroll[]) {
+  async upload(payrolls: string) {
     const params: PutObjectCommandInput = {
       Bucket: process.env.S3_STORAGE_ARN,
       Key: `${process.env.EXPIRING_PAYROLL_FILES_PREFIX}/${uuidv4()}.csv`,
