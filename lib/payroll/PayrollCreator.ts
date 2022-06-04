@@ -6,6 +6,8 @@ export type Payroll = {
 
 export class PayrollCreator {
   handle(date: Date): Payroll[] {
+    date.setDate(15);
+
     const payrolls = [];
     for (let index = 1; index <= 12; index++) {
       payrolls.push({
@@ -20,7 +22,7 @@ export class PayrollCreator {
   }
 
   baseSalaryDate(date: Date) {
-    const lastDayOfMonth = date;
+    const lastDayOfMonth = new Date(date.getTime());
     lastDayOfMonth.setDate(1);
     lastDayOfMonth.setMonth(lastDayOfMonth.getMonth() + 1);
     lastDayOfMonth.setDate(lastDayOfMonth.getDate() - 1);
@@ -37,11 +39,14 @@ export class PayrollCreator {
   }
 
   bonusSalaryDate(date: Date) {
-    const paymentDate = date;
+    const paymentDate = new Date(date.getTime());
     paymentDate.setDate(15);
 
     const isSaturday = paymentDate.getDay() === 6;
     if (isSaturday) paymentDate.setDate(paymentDate.getDate() + 4);
+
+    const isSunday = paymentDate.getDay() === 0;
+    if (isSunday) paymentDate.setDate(paymentDate.getDate() + 3);
 
     return `${paymentDate.getFullYear()}-${
       paymentDate.getMonth() + 1

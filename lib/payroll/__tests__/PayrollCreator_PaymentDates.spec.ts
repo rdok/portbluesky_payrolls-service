@@ -14,6 +14,12 @@ describe("Payment dates", () => {
       expect(payrollCreator.handle(date)[0].month).toEqual(expected);
     }
   });
+
+  it("ensures correct payroll calculations by setting given date to 15th", () => {
+    const { payrollCreator, date } = makeFactory();
+    payrollCreator.handle(date);
+    expect(date.getDate()).toEqual(15);
+  });
 });
 
 function makeFactory() {
