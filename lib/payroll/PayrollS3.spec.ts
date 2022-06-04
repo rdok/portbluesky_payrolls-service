@@ -13,6 +13,7 @@ it("uploads the payment dates to an s3 file", () => {
       input: {
         Bucket: "mocked_S3_STORAGE_ARN",
         Key: `mocked_EXPIRING_PAYROLL_FILES_PREFIX/${id}.csv`,
+        Body: payrollsCsv,
       },
     })
   );

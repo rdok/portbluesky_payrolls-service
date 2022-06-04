@@ -14,6 +14,7 @@ export class PayrollS3 {
     const params: PutObjectCommandInput = {
       Bucket: process.env.S3_STORAGE_ARN,
       Key: `${process.env.EXPIRING_PAYROLL_FILES_PREFIX}/${uuidv4()}.csv`,
+      Body: payrolls,
     };
     await this.s3Client.send(new PutObjectCommand(params));
     return Promise.resolve(payrolls);
