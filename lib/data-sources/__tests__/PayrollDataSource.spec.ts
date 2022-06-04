@@ -1,6 +1,6 @@
 import { PayrollDataSource } from "../PayrollDataSource";
 import { createMock } from "ts-auto-mock";
-import { CreatePayrollInput, PayrollMeta } from "../../types.generated";
+import { CreatePayrollInput } from "../../types.generated";
 import { PayrollCreator } from "../../payroll/PayrollCreator";
 import { PayrollS3 } from "../../payroll/PayrollS3";
 import {
