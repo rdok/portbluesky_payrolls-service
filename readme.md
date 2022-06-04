@@ -13,12 +13,14 @@
 - Accept a date as a parameter, and return the payment dates for the following 12 months, including the supplied date. Results should be returned in CSV format.
 - The API is consumed a browser-based company intranet, written in a frontend framework such as React.
 
-![Slack Monitor Showcase](./slack-showcase.png)
+![Apollo Studio GraphQL Showcase](./markdown/apollo-studio-showcase.png)
+![CSV Showcase](./markdown/payrolls-csv-showcase.png)
+![CI showcase](./markdown/ci-checks-showcase.png)
+![Slack Monitor Showcase](./markdown/slack-showcase.png)
 
 # Features
 
 - Run `make` for local development and to view the GraphQL schema in Apollo Studio
-- API is guarded using IAM authoriser; private APIs. Use Postman with AWS Signature Authorisation to access test or production environments.
 - Compiles NodeJS TypeScript to JS for AWS Lambda.
 - Uses SAM template to create API Gateway, Lambda function with GraphQL
 - Unit tests the Lambda handlers & libraries.
@@ -30,7 +32,7 @@
 - Automates dependency updates for GitHub actions dependencies.
 - Reuses CI checks through [reusable GitHub workflows](https://docs.github.com/en/actions/learn-github-actions/reusing-workflows)
 - Ensures [![Deploy][badge_svg_deploy]][workflow_link_deploy] workflow runs at a time through GitHub's [concurrency](https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions#concurrency) feature.
-- Restricts NodeJS engine version to 14, same as AWS Lambda
+- Restricts NodeJS engine version to 16, same as AWS Lambda
 - Disables Apollo Studio on production environment.
 
 [use_this_template]: https://github.com/rdok/portbluesky_payrolls-service/generate
