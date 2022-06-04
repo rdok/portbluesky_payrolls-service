@@ -1,7 +1,7 @@
 import { PayrollCreator } from "../PayrollCreator";
 
 describe("Payment dates", () => {
-  it("returns payment dates for the following 12 months", () => {
+  it("calculates payment dates for the following 12 months", () => {
     const { payrollCreator, date, expectedPayrolls } =
       makeFactoryWithPaymentDatesForTheFollowing12Months();
     expect(payrollCreator.handle(date)).toEqual(expectedPayrolls);

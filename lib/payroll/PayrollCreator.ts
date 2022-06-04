@@ -1,10 +1,9 @@
 export type Payroll = {
   month: string;
-  baseSalaryPaymentDate: Date;
-  bonusPaymentDate: Date;
+  baseSalaryPaymentDate: string;
+  bonusPaymentDate: string;
 };
 
-// TODO: change return types from Date to string
 export class PayrollCreator {
   handle(date: Date): Payroll[] {
     const payrolls = [];
@@ -32,7 +31,9 @@ export class PayrollCreator {
     const isSunday = lastDayOfMonth.getDay() === 0;
     if (isSunday) lastDayOfMonth.setDate(lastDayOfMonth.getDate() - 2);
 
-    return lastDayOfMonth;
+    return `${lastDayOfMonth.getFullYear()}-${
+      lastDayOfMonth.getMonth() + 1
+    }-${lastDayOfMonth.getDate()}`;
   }
 
   bonusSalaryDate(date: Date) {
@@ -42,6 +43,8 @@ export class PayrollCreator {
     const isSaturday = paymentDate.getDay() === 6;
     if (isSaturday) paymentDate.setDate(paymentDate.getDate() + 4);
 
-    return paymentDate;
+    return `${paymentDate.getFullYear()}-${
+      paymentDate.getMonth() + 1
+    }-${paymentDate.getDate()}`;
   }
 }
