@@ -1,6 +1,23 @@
+export type Payroll = {
+  month: string;
+  baseSalaryPaymentDate: Date;
+  bonusPaymentDate: Date;
+};
+
+// TODO: change return types from Date to string
 export class PayrollCreator {
-  handle(date: string) {
-    return date;
+  handle(date: Date): Payroll[] {
+    const payrolls = [];
+    for (let index = 1; index <= 12; index++) {
+      payrolls.push({
+        month: `${date.getFullYear()}-${date.getMonth() + 1}`,
+        baseSalaryPaymentDate: this.baseSalaryDate(date),
+        bonusPaymentDate: this.bonusSalaryDate(date),
+      });
+      date.setMonth(date.getMonth() + 1);
+    }
+
+    return payrolls;
   }
 
   baseSalaryDate(date: Date) {

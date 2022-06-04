@@ -1,26 +1,24 @@
 import { PayrollCreator } from "../PayrollCreator";
 
-describe("Base salaries", () => {
-  it("pays base salaries on the last day the month", () => {
-    const { payrollCreator, lastDayOfMonth, date } = makeFactory();
-    expect(payrollCreator.baseSalaryDate(date)).toEqual(lastDayOfMonth);
-  });
+it("pays base salaries on the last day the month", () => {
+  const { payrollCreator, lastDayOfMonth, date } = makeFactory();
+  expect(payrollCreator.baseSalaryDate(date)).toEqual(lastDayOfMonth);
+});
 
-  describe("pays base salaries on the Friday", function () {
-    test("when last day of month is a Saturday", () => {
-      const { payrollCreator, lastFridayOfMonth, saturdayLastDayOfMonth } =
-        makeFactoryWithSaturdayLastDayOfMonth();
-      expect(payrollCreator.baseSalaryDate(saturdayLastDayOfMonth)).toEqual(
-        lastFridayOfMonth
-      );
-    });
-    test("when last day of month is a Sunday", () => {
-      const { payrollCreator, lastFridayOfMonth, sundayLastDayOfMonth } =
-        makeFactoryWithSundayLastDayOfMonth();
-      expect(payrollCreator.baseSalaryDate(sundayLastDayOfMonth)).toEqual(
-        lastFridayOfMonth
-      );
-    });
+describe("pays base salaries on the Friday", function () {
+  test("when last day of month is a Saturday", () => {
+    const { payrollCreator, lastFridayOfMonth, saturdayLastDayOfMonth } =
+      makeFactoryWithSaturdayLastDayOfMonth();
+    expect(payrollCreator.baseSalaryDate(saturdayLastDayOfMonth)).toEqual(
+      lastFridayOfMonth
+    );
+  });
+  test("when last day of month is a Sunday", () => {
+    const { payrollCreator, lastFridayOfMonth, sundayLastDayOfMonth } =
+      makeFactoryWithSundayLastDayOfMonth();
+    expect(payrollCreator.baseSalaryDate(sundayLastDayOfMonth)).toEqual(
+      lastFridayOfMonth
+    );
   });
 });
 

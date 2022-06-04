@@ -1,5 +1,7 @@
+import { Payroll } from "./PayrollCreator";
+
 export class PayrollS3 {
-  upload(file: string) {
-    return Promise.resolve(file);
+  upload(payrolls: Payroll[]) {
+    return Promise.resolve(payrolls);
   }
 }
