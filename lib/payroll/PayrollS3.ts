@@ -1,4 +1,3 @@
-import { Payroll } from "./PayrollCreator";
 import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { v4 as uuidv4 } from "uuid";
 import { PutObjectCommandInput } from "@aws-sdk/client-s3/dist-types/commands/PutObjectCommand";
@@ -17,6 +16,7 @@ export class PayrollS3 {
       Body: payrolls,
     };
     await this.s3Client.send(new PutObjectCommand(params));
-    return Promise.resolve(payrolls);
+
+    return { bucket: params.Bucket, key: params.Key };
   }
 }

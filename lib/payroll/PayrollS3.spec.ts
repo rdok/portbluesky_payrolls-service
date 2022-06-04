@@ -19,6 +19,14 @@ it("uploads the payment dates to an s3 file", () => {
   );
 });
 
+it("returns the meta of the uploaded file meta", async () => {
+  const { payrollS3, payrollsCsv, id } = makeFactory();
+  await expect(payrollS3.upload(payrollsCsv)).resolves.toEqual({
+    key: `mocked_EXPIRING_PAYROLL_FILES_PREFIX/${id}.csv`,
+    bucket: "mocked_S3_STORAGE_ARN",
+  });
+});
+
 function makeFactory() {
   const s3Client = createMock<S3Client>();
   const payrollS3 = new PayrollS3({ s3Client });
