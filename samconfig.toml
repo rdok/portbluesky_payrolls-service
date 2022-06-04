@@ -4,7 +4,7 @@ version = 0.1
 [prod.deploy.parameters]
 parameter_overrides=[
   "NodeENV=production",
-  "CorsOriginsCommaDelimited=https://www.rdok.co.com",
+  "CorsOriginsCommaDelimited=https://rdok.co.uk",
   "AwsChatbotStackName=rdok-prod-aws-chatbot",
   "WildcardDomainCertArn=arn:aws:acm:us-east-1:353196159109:certificate/b7e23fbf-69a3-440f-8560-59f240f2cc09",
   "BaseDomainName=rdok.co.uk",
@@ -16,7 +16,7 @@ parameter_overrides=[
 [test.deploy.parameters]
 parameter_overrides=[
   "NodeENV=test",
-  "CorsOriginsCommaDelimited=https://www.rdok.co.com,https://studio.apollographql.com",
+  "CorsOriginsCommaDelimited=https://rdok.co.uk,https://studio.apollographql.com",
   "AwsChatbotStackName=rdok-test-aws-chatbot",
   "WildcardDomainCertArn=arn:aws:acm:us-east-1:353196159109:certificate/b7e23fbf-69a3-440f-8560-59f240f2cc09",
   "BaseDomainName=rdok.co.uk",
@@ -28,7 +28,7 @@ parameter_overrides=[
 [dev.deploy.parameters]
 parameter_overrides=[
   "NodeENV=dev",
-  "CorsOriginsCommaDelimited=https://www.rdok.co.com,https://studio.apollographql.com",
+  "CorsOriginsCommaDelimited=https://rdok.co.uk,https://studio.apollographql.com",
   "AwsChatbotStackName=rdok-test-aws-chatbot",
   "WildcardDomainCertArn=arn:aws:acm:us-east-1:353196159109:certificate/b7e23fbf-69a3-440f-8560-59f240f2cc09",
   "BaseDomainName=rdok.co.uk",
