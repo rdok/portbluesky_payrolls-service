@@ -1,9 +1,10 @@
 # payrolls-service
+
 [![Deploy][badge_svg_deploy]][workflow_link_deploy]
 [![Check][badge_svg_check]][workflow_link_check]
 
 > Generates company payrolls. Serverless GraphQL to calculate the dates on which to pay sales staff.
- 
+
 # Acceptance Criteria
 
 - Sales staff are paid a regular ﬁxed base salary each month, plus a regular monthly bonus.
@@ -11,7 +12,6 @@
 - On the 15th of each month, bonuses are paid for the previous month, unless that day is a weekend, in which case they are paid on the first Wednesday after the 15th.
 - Accept a date as a parameter, and return the payment dates for the following 12 months, including the supplied date. Results should be returned in CSV format.
 - The API is consumed a browser-based company intranet, written in a frontend framework such as React.
-
 
 # cURL GraphQL Request - Production Environment
 
@@ -22,8 +22,8 @@ curl --request POST \
   --data-raw '{"query":"mutation Mutation($createPayrollInput: CreatePayrollInput!) {  createPayroll(createPayrollInput: $createPayrollInput) {    ExpiresAt    PreSignedUrl  }}","variables":{"createPayrollInput":{"startDate":"2022-01"}},"operationName":"Mutation"}'
 ```
 
-
 # Features
+
 ![Apollo Studio GraphQL Showcase](./markdown/apollo-studio-showcase.png)
 ![CSV Showcase](./markdown/payrolls-csv-showcase.png)
 ![CI showcase](./markdown/ci-checks-showcase.png)
