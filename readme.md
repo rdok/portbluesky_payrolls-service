@@ -28,6 +28,7 @@ curl --request POST \
 ![CSV Showcase](./markdown/payrolls-csv-showcase.png)
 ![CI showcase](./markdown/ci-checks-showcase.png)
 ![Slack Monitor Showcase](./markdown/slack-showcase.png)
+![Multiple Environments](./markdown/multiple-environments.png)
 
 - Run `make` for local development and to view the GraphQL schema in Apollo Studio
 - Compiles NodeJS TypeScript to JS for AWS Lambda.
