@@ -3,7 +3,10 @@ import { createMock } from "ts-auto-mock";
 import { CreatePayrollInput, PayrollMeta } from "../../types.generated";
 import { PayrollCreator } from "../../payroll/PayrollCreator";
 import { PayrollS3 } from "../../payroll/PayrollS3";
-import { PayrollSigner } from "../../payroll/PayrollSigner";
+import {
+  PayrollSignedOutput,
+  PayrollSigner,
+} from "../../payroll/PayrollSigner";
 import { PayrollCsv } from "../../payroll/PayrollCsv";
 
 it("creates a payroll for the given date", async () => {
@@ -32,25 +35,28 @@ it("generates a pre signed url for the S3 payroll file", async () => {
 });
 
 it("includes the pre-sign url on the response", async () => {
-  const { payrollDataSource, input, payrollMeta } = makeFactory();
+  const { payrollDataSource, input, payrollSignedOutput } = makeFactory();
   const response = await payrollDataSource.create(input);
   expect(response).toEqual(
     expect.objectContaining({
-      PreSignedUrl: payrollMeta.PreSignedUrl,
+      PreSignedUrl: payrollSignedOutput.preSignedUrl,
     })
   );
 });
 
-it.skip("includes the expiration date on the response", async () => {
-  const { payrollDataSource, input, payrollMeta } = makeFactory();
+it("includes the expiration date on the response", async () => {
+  const { payrollDataSource, input, payrollSignedOutput } = makeFactory();
   const response = await payrollDataSource.create(input);
-  expect(response).toEqual(payrollMeta);
+  expect(response).toEqual(
+    expect.objectContaining({
+      ExpiresAt: payrollSignedOutput.expiresAt.toDateString(),
+    })
+  );
 });
 
 function makeFactory() {
   const payrolls = jest.fn();
   const uploadedS3Payroll = jest.fn();
-  const preSignedUrl = jest.fn() as any;
   const payrollsCsv = jest.fn();
 
   const payrollCreator = createMock<PayrollCreator>({
@@ -63,8 +69,10 @@ function makeFactory() {
   const payrollS3 = createMock<PayrollS3>({
     upload: jest.fn().mockResolvedValue(uploadedS3Payroll),
   });
+
+  const payrollSignedOutput = createMock<PayrollSignedOutput>();
   const payrollSigner = createMock<PayrollSigner>({
-    sign: jest.fn().mockResolvedValue(preSignedUrl),
+    sign: jest.fn().mockResolvedValue(payrollSignedOutput),
   });
   const payrollDataSource = new PayrollDataSource({
     payrollCreator,
@@ -73,9 +81,6 @@ function makeFactory() {
     payrollCsv,
   });
   const input = createMock<CreatePayrollInput>();
-  const payrollMeta = createMock<PayrollMeta>({
-    PreSignedUrl: preSignedUrl,
-  });
 
   return {
     payrollDataSource,
@@ -85,8 +90,8 @@ function makeFactory() {
     payrollS3,
     payrollSigner,
     uploadedS3Payroll,
-    payrollMeta,
     payrollsCsv,
     payrollCsv,
+    payrollSignedOutput,
   };
 }
